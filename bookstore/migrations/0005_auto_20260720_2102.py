@@ -14,6 +14,12 @@ def ensure_all_books_have_editorial(apps, schema_editor):
     Editorial = apps.get_model('bookstore', 'Editorial')
     Book = apps.get_model('bookstore', 'Book')
 
+    # if the database is empty, theres no 
+    # need to iterate over any tables
+    if not Book.objects.exists():
+        print("No book in the database, forwarding to the next migration")
+        return
+
     # get first Editorial object
     first_editorial = Editorial.objects.first()
 
