@@ -12,6 +12,12 @@ def forward_migrate_editorial(apps, schema):
     Book = apps.get_model('bookstore', 'Book')
     Editorial = apps.get_model('bookstore', 'Editorial')
 
+    # if the database is empty, theres no 
+    # need to iterate over any tables
+    if not Book.objects.exists():
+        print("No book in the database, forwarding to the next migration")
+        return
+
     # iterate over every book in a transaction to ensure 
     # database performance and th fact that data
     # will be rolled back in case of failure
