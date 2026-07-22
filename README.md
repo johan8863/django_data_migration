@@ -209,3 +209,56 @@ class Migration(migrations.Migration):
         )
     ]
 ```
+
+## The final tuning
+
+If the database is empty there's no need of iterating over ***Book*** Django model table or fetching *Books* without *Editorial* to avoid the migrations crash in the secons auto migration. Let's take advantage of `Book.objects.exists()` to achieve that case.
+
+### In the first auto migration
+
+```python
+...
+def forward_migrate_editorial(apps, schema):
+    """
+    Creates Editorials from Book data and assign them
+    """
+
+    # get historical models versions as suggested here
+    # https://docs.djangoproject.com/en/5.2/topics/migrations/#historical-models
+    Book = apps.get_model('bookstore', 'Book')
+    Editorial = apps.get_model('bookstore', 'Editorial')
+
+    # if the database is empty, theres no 
+    # need to iterate over any tables
+    if not Book.objects.exists():
+        print("No book in the database, forwarding to the next migration")
+        return
+# the rest of the code
+...
+```
+
+### In the second auto migration
+
+```python
+...
+def ensure_all_books_have_editorial(apps, schema_editor):
+    """
+    Ensures all books have an editorial, if a book doesn't have
+    any get assigned the first one, if no Editorial exists a default one
+    is created
+    """
+
+    # get historical models
+    Editorial = apps.get_model('bookstore', 'Editorial')
+    Book = apps.get_model('bookstore', 'Book')
+
+    # if the database is empty, go ahead 
+    # to the next operations
+    if not Book.objects.exists():
+        print("No book in the database, forwarding to the next operations")
+        return
+# the rest of the code
+...
+```
+
+And that's it, now you have a background in case you need to move data between Django models when mdifying the database schema or any other kind of data transference or modification. Enjoy!
