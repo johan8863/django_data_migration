@@ -262,3 +262,9 @@ def ensure_all_books_have_editorial(apps, schema_editor):
 ```
 
 And that's it, now you have a background in case you need to move data between Django models when mdifying the database schema or any other kind of data transference or modification. Enjoy!
+
+## Resources
+
+- [Django migrations](https://docs.djangoproject.com/en/5.2/topics/migrations/)
+- [RunPython Operations](https://docs.djangoproject.com/en/5.2/ref/migration-operations/#django.db.migrations.operations.RunPython)
+- [Data Migrations](https://docs.djangoproject.com/en/5.2/topics/migrations/#data-migrations)
