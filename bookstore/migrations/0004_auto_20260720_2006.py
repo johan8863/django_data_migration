@@ -25,7 +25,7 @@ def forward_migrate_editorial(apps, schema):
         for book in Book.objects.all():
             # get_or_create returns a tuple of (object, created) 
             # the second value won't be necessary this time
-            # that's whay the wildcard variable _
+            # that's why the wildcard variable _
             editorial, _ = Editorial.objects.get_or_create(
                 # check for coincidences no matter case sensitive
                 name__iexact=book.editorial_name,
