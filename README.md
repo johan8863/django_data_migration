@@ -209,3 +209,5 @@ class Migration(migrations.Migration):
         )
     ]
 ```
+
+> A full explanation can be found on this [gist](https://gist.github.com/johan8863/ba15d8640d19b5d327950cc8ff5625fb)
