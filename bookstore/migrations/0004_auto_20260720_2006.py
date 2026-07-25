@@ -19,7 +19,7 @@ def forward_migrate_editorial(apps, schema):
         return
 
     # iterate over every book in a transaction to ensure 
-    # database performance and th fact that data
+    # database performance and the fact that data
     # will be rolled back in case of failure
     with transaction.atomic():
         for book in Book.objects.all():
@@ -52,7 +52,7 @@ def reverse_migrate_editorial(apps, schema_editor):
     # iterate over every book related to an editorial
     # in a transaction
     with transaction.atomic():
-        # select_related add performance over database searching
+        # select_related adds performance over database searching
         # when retrieving foreign-key relationships
         for book in Book.objects.select_related('editorial').all():
             if book.editorial:
